@@ -1,0 +1,4 @@
+# sample query used in ch.miranet.rdf4jutils2.query.QueryUtilsTest.testLoadQuery_ok()
+select * {
+    ?s ?p ?o .
+} LIMIT 1
