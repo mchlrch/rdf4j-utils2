@@ -7,7 +7,7 @@
 @prefix rsx: <http://rdf4j.org/shacl-extensions#> .
 
 ex:MyShape4 a sh:NodeShape;
-  sh:target dash:AllSubjectsTarget ;
+  sh:target [a dash:AllSubjectsTarget ] ;
   sh:property [
       sh:path rdfs:comment;
       sh:minCount "1"^^xsd:int;

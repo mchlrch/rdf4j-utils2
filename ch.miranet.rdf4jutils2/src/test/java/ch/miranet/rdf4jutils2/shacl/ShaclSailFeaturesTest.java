@@ -130,6 +130,10 @@ public class ShaclSailFeaturesTest {
 		assertTrue(validationReport.isPresent());
 	}
 
+	// this one fails because rsx:targetShape doesn’t support sh:pattern
+	// - https://rdf4j.org/documentation/programming/shacl/#rsx---eclipse-rdf4j-shacl-extensions
+	// - https://rdf4j.org/shacl/extensions.html)
+	//
 	// fails with rdf4j version 3.6.1 (GraphDB 9.7.0)
 	// fails with rdf4j version 3.7.3 (GraphDB 9.10.0)
 	// throws java.lang.UnsupportedOperationException: PatternConstraintComponent
@@ -183,10 +187,7 @@ public class ShaclSailFeaturesTest {
 		assertFalse(validationReport.isPresent());
 	}
 
-	// fails with rdf4j version 3.6.1 (GraphDB 9.7.0)
-	// fails with rdf4j version 3.7.3 (GraphDB 9.10.0)
 	@Test
-	@Disabled
 	public void myshape4_dash_all_subjects_target_fail_missing_comment() {
 		dataBuilder.subject("https://data.example.org/thing/abc")
 				.add(RDFS.LABEL, "ABC");
@@ -230,6 +231,8 @@ public class ShaclSailFeaturesTest {
 		assertFalse(validationReport.isPresent());
 	}
 
+	// this one fails, because the feature that is used is no longer supported in RDF4J. the respective config option should be removed from GraphDB.
+	//
 	// fails with rdf4j version 3.6.1 (GraphDB 9.7.0)
 	// fails with rdf4j version 3.7.3 (GraphDB 9.10.0)
 	@Test
@@ -255,6 +258,10 @@ public class ShaclSailFeaturesTest {
 		assertTrue(validationReport.isPresent());
 	}
 
+	// this one fails, because sh:path is limited to single predicate paths, eg. ex:age or a single inverse path. Sequence paths, alternative paths and the like are not supported.
+	// - https://rdf4j.org/documentation/programming/shacl/#supported-shacl-features
+	// - https://rdf4j.org/documentation/programming/shacl/#rsx---eclipse-rdf4j-shacl-extensions
+	//
 	// fails with rdf4j version 3.6.1 (GraphDB 9.7.0)
 	// fails with rdf4j version 3.7.3 (GraphDB 9.10.0)
 	// throws org.eclipse.rdf4j.sail.shacl.ast.ShaclUnsupportedException
