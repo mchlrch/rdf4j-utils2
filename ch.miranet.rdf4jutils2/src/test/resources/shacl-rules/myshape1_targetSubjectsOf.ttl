@@ -10,6 +10,6 @@ ex:MyShape1 a sh:NodeShape;
   sh:targetSubjectsOf rdfs:label;
   sh:property [
       sh:path rdfs:comment;
-      sh:minCount "1"^^xsd:int;
-      sh:maxCount "1"^^xsd:int
+      sh:minCount "1"^^xsd:integer;
+      sh:maxCount "1"^^xsd:integer
     ] .
