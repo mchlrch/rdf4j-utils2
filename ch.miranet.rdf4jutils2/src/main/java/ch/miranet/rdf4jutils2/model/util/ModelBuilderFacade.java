@@ -46,6 +46,10 @@ public class ModelBuilderFacade {
 		this(null, new Namespace[0]);
 	}
 	
+	public ModelBuilderFacade(Collection<Namespace> namespaces) {
+		this(null, namespaces.toArray(new Namespace[namespaces.size()]));
+	}
+	
 	public ModelBuilderFacade(Namespace... namespaces) {
 		this(null, namespaces);
 	}
@@ -68,35 +72,35 @@ public class ModelBuilderFacade {
 		return valueFactory;
 	}
 
-    ModelBuilderFacade subject(String prefixedNameOrIri) {
+	public ModelBuilderFacade subject(String prefixedNameOrIri) {
         modelBuilder.subject(prefixedNameOrIri);
         return this;
     }
 
-    ModelBuilderFacade subject(IRI iri) {
+	public ModelBuilderFacade subject(IRI iri) {
         modelBuilder.subject(iri);
         return this;
     }
 
-    ModelBuilderFacade add(String predicate, Object object) {
+	public ModelBuilderFacade add(String predicate, Object object) {
         modelBuilder.add(predicate, object);
         return this;
     }
 
-    ModelBuilderFacade add(IRI predicate, Object object) {
+	public ModelBuilderFacade add(IRI predicate, Object object) {
         modelBuilder.add(predicate, object);
         return this;
     }
 
     /** Ignores null values */
-    ModelBuilderFacade addNullable(String predicate, Object object) {
+	public ModelBuilderFacade addNullable(String predicate, Object object) {
         if (object != null) {
             add(predicate, object);
         }
         return this;
     }
 
-    ModelBuilderFacade addEach(Map<IRI, Object> propertyValues) {
+	public ModelBuilderFacade addEach(Map<IRI, Object> propertyValues) {
         propertyValues.forEach(this::addPropertyValue);
         return this;
     }
@@ -113,7 +117,7 @@ public class ModelBuilderFacade {
         }
     }
 
-    ModelBuilderFacade addEach(String predicate, Collection<?> objectValues) {
+    public ModelBuilderFacade addEach(String predicate, Collection<?> objectValues) {
         objectValues.forEach(o -> modelBuilder.add(predicate, o));
         return this;
     }
