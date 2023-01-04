@@ -1,0 +1,18 @@
+@prefix : <http://data.example.org/> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix uml: <https://schema.miranet.ch/model2viz/uml/> .
+
+[] a sh:ValidationReport;
+  sh:conforms false;
+  rdf4j:truncated false;
+  sh:result [ a sh:ValidationResult;
+      sh:focusNode <http://data.example.org/Baz/attribute/location>;
+      sh:resultPath uml:name;
+      sh:sourceConstraintComponent sh:MinCountConstraintComponent;
+      sh:resultSeverity sh:Violation;
+      sh:sourceShape [ a sh:PropertyShape;
+          sh:path uml:name;
+          sh:minCount 1
+        ]
+    ] .

@@ -1,0 +1,10 @@
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+SELECT DISTINCT ?focusNode ?resultPath ?sourceConstraintComponent WHERE {
+    
+    ?resultNode a sh:ValidationResult ;
+        sh:focusNode ?focusNode ;
+        sh:resultPath ?resultPath ;
+        sh:sourceConstraintComponent ?sourceConstraintComponent .
+
+} ORDER BY ASC(?focusNode) ASC(?resultPath)
