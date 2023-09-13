@@ -208,56 +208,6 @@ public class ShaclSailFeaturesTest {
 		assertTrue(validationReport.isPresent());
 	}
 
-	@Test
-	public void myshape5_UndefinedTargetValidatesAllSubjects_ok() {
-		dataBuilder.subject("https://data.example.org/thing/abc")
-				.add(RDFS.LABEL, "ABC")
-				.add(RDFS.COMMENT, "Comment about ABC.");
-
-		final Model data = dataBuilder.build();
-		dumpTurtle(data);
-
-		assertNotNull(data);
-
-		final Iterable<Statement> shaclRules = loadShaclRules(
-				"/shacl-rules/myshape5_UndefinedTargetValidatesAllSubjects.ttl");
-		final Optional<Model> validationReport = InmemoryShaclValidator.validate(data, shaclRules,
-				shaclSail -> {
-					shaclSail.setUndefinedTargetValidatesAllSubjects(true);
-				});
-
-		dumpTurtle(validationReport);
-
-		assertFalse(validationReport.isPresent());
-	}
-
-	// this one fails, because the feature that is used is no longer supported in RDF4J. the respective config option should be removed from GraphDB.
-	//
-	// fails with rdf4j version 3.6.1 (GraphDB 9.7.0)
-	// fails with rdf4j version 3.7.3 (GraphDB 9.10.0)
-	@Test
-	@Disabled
-	public void myshape5_UndefinedTargetValidatesAllSubjects_fail_missing_comment() {
-		dataBuilder.subject("https://data.example.org/thing/abc")
-				.add(RDFS.LABEL, "ABC");
-
-		final Model data = dataBuilder.build();
-		dumpTurtle(data);
-
-		assertNotNull(data);
-
-		final Iterable<Statement> shaclRules = loadShaclRules(
-				"/shacl-rules/myshape5_UndefinedTargetValidatesAllSubjects.ttl");
-		final Optional<Model> validationReport = InmemoryShaclValidator.validate(data, shaclRules,
-				shaclSail -> {
-					shaclSail.setUndefinedTargetValidatesAllSubjects(true);
-				});
-
-		dumpTurtle(validationReport);
-
-		assertTrue(validationReport.isPresent());
-	}
-
 	// this one fails, because sh:path is limited to single predicate paths, eg. ex:age or a single inverse path. Sequence paths, alternative paths and the like are not supported.
 	// - https://rdf4j.org/documentation/programming/shacl/#supported-shacl-features
 	// - https://rdf4j.org/documentation/programming/shacl/#rsx---eclipse-rdf4j-shacl-extensions

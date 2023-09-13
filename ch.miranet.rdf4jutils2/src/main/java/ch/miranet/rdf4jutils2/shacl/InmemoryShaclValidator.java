@@ -3,7 +3,6 @@ package ch.miranet.rdf4jutils2.shacl;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import org.eclipse.rdf4j.exceptions.ValidationException;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.vocabulary.RDF4J;
@@ -13,6 +12,7 @@ import org.eclipse.rdf4j.repository.RepositoryException;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
 import org.eclipse.rdf4j.sail.shacl.ShaclSail;
+import org.eclipse.rdf4j.sail.shacl.ShaclSailValidationException;
 
 public class InmemoryShaclValidator {
 
@@ -36,6 +36,7 @@ public class InmemoryShaclValidator {
 		Repository repo = new SailRepository(shaclSail);
 		repo.init();
 
+		Optional<Model> result;
 		try (RepositoryConnection connection = repo.getConnection()) {
 
 			// add shapes
@@ -47,17 +48,21 @@ public class InmemoryShaclValidator {
 
 			try {
 				connection.commit();
-				return Optional.empty();
+				result = Optional.empty();
 			} catch (RepositoryException exception) {
 				Throwable cause = exception.getCause();
-				if (cause instanceof ValidationException) {
-					Model validationReportModel = ((ValidationException) cause).validationReportAsModel();
-					return Optional.of(validationReportModel);
+				if (cause instanceof ShaclSailValidationException) {
+					Model validationReportModel = ((ShaclSailValidationException) cause).validationReportAsModel();
+					result = Optional.of(validationReportModel);
 				} else {
 					throw exception;
 				}
 			}
 		}
+		
+		repo.shutDown();
+		
+		return result;
 	}
 
 }
