@@ -9,6 +9,7 @@ import java.util.Map;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Namespace;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
@@ -77,8 +78,8 @@ public class ModelBuilderFacade {
         return this;
     }
 
-	public ModelBuilderFacade subject(IRI iri) {
-        modelBuilder.subject(iri);
+	public ModelBuilderFacade subject(Resource subject) {
+        modelBuilder.subject(subject);
         return this;
     }
 
