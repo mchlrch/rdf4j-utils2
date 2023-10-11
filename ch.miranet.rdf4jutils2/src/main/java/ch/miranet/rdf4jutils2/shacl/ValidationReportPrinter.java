@@ -6,7 +6,7 @@ import static org.eclipse.rdf4j.query.QueryLanguage.SPARQL;
 
 import java.util.Iterator;
 
-import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
@@ -18,13 +18,13 @@ public class ValidationReportPrinter {
 
 	private static final String QUERY = loadQuery("queries/extract-results-from-shacl-validation-report.rq").get();
 
-	public static String printOneLineForEachResult(final Model model) {
+	public static String printOneLineForEachResult(final Iterable<Statement> shaclValidationReport) {
 		final StringBuilder sb = new StringBuilder();
 
 		final Repository memoryRepo = new SailRepository(new MemoryStore());
 		try (final RepositoryConnection connection = memoryRepo.getConnection()) {
 
-			connection.add(model);
+			connection.add(shaclValidationReport);
 
 			final TupleQueryResult result = connection.prepareTupleQuery(SPARQL, QUERY).evaluate();
 			for (final Iterator<BindingSet> it = result.iterator(); it.hasNext();) {
